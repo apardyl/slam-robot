@@ -12,6 +12,7 @@
 #include "servo.h"
 #include "encoder.h"
 #include "usart.h"
+#include "TWIStateMachine.h"
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
@@ -41,6 +42,11 @@ void initPorts() {
 	DDRL = 0xFF;
 }
 
+void test(uint8_t data) {
+	uint8_t lol = data;
+	writeLed(lol);
+}
+
 int main(void) {
 	initPorts();
 	initPower();
@@ -51,11 +57,34 @@ int main(void) {
 	initMotors();
 	initServos();
 	initEncoders();
+	i2c.init();
 	beep();
 	
 	sei();
 	
-	//_delay_ms(1000);
+	_delay_ms(100);
+	
+	i2c.readBit(0x1D,0x0F,test);
+	
+					//TWCR = ( 1 << TWEN ) | (1 << TWSTA) | (1<< TWINT);
+					//while ((TWCR & (1<<TWINT)) == 0);
+					//TWDR = 0x3A;
+					//TWCR = ( 1 << TWEN ) | (1<< TWINT);
+					//while ((TWCR & (1<<TWINT)) == 0);
+					//TWDR = 0x0F;
+					//TWCR = ( 1 << TWEN ) | (1<< TWINT);
+					//while ((TWCR & (1<<TWINT)) == 0);
+					//TWCR = ( 1 << TWEN ) | (1 << TWSTA) | (1<< TWINT);
+					//while ((TWCR & (1<<TWINT)) == 0);
+					//TWDR = 0x3B;
+					//TWCR = ( 1 << TWEN ) | (1<< TWINT);
+					//while ((TWCR & (1<<TWINT)) == 0);
+					//TWCR = ( 1 << TWEN ) | (1<< TWINT);
+					//while ((TWCR & (1<<TWINT)) == 0);
+					//uint8_t lol = TWDR;
+					//TWCR = ( 1 << TWEN ) | (1 << TWINT) | (1 << TWSTO);		
+					//writeLed(lol);
+	
 	
 	for(int i = 0; i<24; i++) {
 		FIFOTxDebugUsart.insert('a' + i);

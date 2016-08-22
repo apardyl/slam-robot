@@ -32,14 +32,13 @@ uint8_t FIFO::elementCount() {
 
 void FIFO::insert(uint8_t data) {
 	if(isFULL()) return;	
-	*(buffer + this->head) = data;
+	*(buffer + head) = data;
 	head++;
 	head = (head < size) ? head : 0;
 	count++;
 }
 
 uint8_t FIFO::pop() {
-	if(isEmpty()) return 0x00;
 	uint8_t x = *(buffer + tail);
 	tail++;
 	tail = (tail < size) ? tail : 0;

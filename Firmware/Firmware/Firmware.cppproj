@@ -210,6 +210,12 @@
     <Compile Include="servo.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="TWIStateMachine.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="TWIStateMachine.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="usart.cpp">
       <SubType>compile</SubType>
     </Compile>
