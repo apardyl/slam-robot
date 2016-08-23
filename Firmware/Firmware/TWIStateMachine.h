@@ -18,17 +18,22 @@ public:
 	void init();
 	void worker();
 	void reset();
-	void writeBit(uint8_t addr, uint8_t reg, uint8_t data);
-	void readBit(uint8_t addr, uint8_t reg, void (*callback)(uint8_t));
+	void write(uint8_t addr, uint8_t reg, uint8_t dataToWrite);
+	void write(uint8_t addr, uint8_t reg, uint8_t * dataArrayToWrite, uint8_t lenght);
+	void read(uint8_t addr, uint8_t reg, void (*callback)(uint8_t));
+	void read(uint8_t addr, uint8_t reg, void (*callback)(uint8_t *, uint8_t), uint8_t lenght);
 	
 private:
 	uint8_t address, regAddress;
-	volatile uint8_t data;
+	volatile uint8_t * dataArray;
+	volatile uint8_t arrayLenght;
+	volatile uint8_t counter;
 	void (*readCallback)(uint8_t);
+	void (*readCallbackArray)(uint8_t *, uint8_t);
 	enum modes {WRITE_REG, READ_REG};
 	volatile modes mode;
 	
-	enum states {NONE, START, SADDR, SREGADR, wSDATA, wSTOP, rRSTART, rRADDR, rRDATA, rSTOP};
+	enum states {NONE, START, SADDR, SREGADR, wSDATA, wSTOP, rRSTART, rRADDR, rRDATA, rRDATAFIRST, rRDATAMIDDLE, rRDATALAST, rSTOP};
 	volatile states state;
 	
 }; //TWIStateMachine

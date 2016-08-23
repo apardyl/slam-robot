@@ -64,32 +64,12 @@ int main(void) {
 	
 	_delay_ms(100);
 	
-	i2c.readBit(0x1D,0x0F,test);
+	i2c.read(0x1D,0x0F,test);	
 	
-					//TWCR = ( 1 << TWEN ) | (1 << TWSTA) | (1<< TWINT);
-					//while ((TWCR & (1<<TWINT)) == 0);
-					//TWDR = 0x3A;
-					//TWCR = ( 1 << TWEN ) | (1<< TWINT);
-					//while ((TWCR & (1<<TWINT)) == 0);
-					//TWDR = 0x0F;
-					//TWCR = ( 1 << TWEN ) | (1<< TWINT);
-					//while ((TWCR & (1<<TWINT)) == 0);
-					//TWCR = ( 1 << TWEN ) | (1 << TWSTA) | (1<< TWINT);
-					//while ((TWCR & (1<<TWINT)) == 0);
-					//TWDR = 0x3B;
-					//TWCR = ( 1 << TWEN ) | (1<< TWINT);
-					//while ((TWCR & (1<<TWINT)) == 0);
-					//TWCR = ( 1 << TWEN ) | (1<< TWINT);
-					//while ((TWCR & (1<<TWINT)) == 0);
-					//uint8_t lol = TWDR;
-					//TWCR = ( 1 << TWEN ) | (1 << TWINT) | (1 << TWSTO);		
-					//writeLed(lol);
-	
-	
-	for(int i = 0; i<24; i++) {
-		FIFOTxDebugUsart.insert('a' + i);
+	for(int i = 0; i<25; i++) {
+		FIFOTxDebugUsart.insert('#');
 	}
-	
+	FIFOTxDebugUsart.insert('\n');
 	sendDebugUSART();
 	
 	while (1) {
