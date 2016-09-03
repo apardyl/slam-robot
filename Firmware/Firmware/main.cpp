@@ -13,6 +13,7 @@
 #include "encoder.h"
 #include "usart.h"
 #include "TWIStateMachine.h"
+#include "IMU.h"
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
@@ -58,13 +59,18 @@ int main(void) {
 	initServos();
 	initEncoders();
 	i2c.init();
+	imu.start();
+
 	beep();
 	
 	sei();
 	
-	_delay_ms(100);
-	
-	i2c.read(0x1D,0x0F,test);	
+	//_delay_ms(1000);
+	//i2c.write(0x1D,0x24,0xF0);
+	imu.worker();
+	_delay_ms(1000);	
+
+	i2c.read(0x1D,0x20,test);	
 	
 	for(int i = 0; i<25; i++) {
 		FIFOTxDebugUsart.insert('#');

@@ -23,9 +23,15 @@ void TWIStateMachine::init() {
 void TWIStateMachine::reset() {
 	state = NONE;
 	TWCR = 0x00;
+	TWDR = 0x00;
+	init();
 }
 
-void TWIStateMachine::read(uint8_t addr, uint8_t reg, void (*callback)(uint8_t)) {
+bool TWIStateMachine::isBusy() {
+	return state != NONE;
+}
+
+void TWIStateMachine::read(const uint8_t addr, const uint8_t reg, void (*callback)(uint8_t)) {
 	if(state != NONE) return;
 	address = addr;
 	regAddress = reg;
@@ -38,7 +44,7 @@ void TWIStateMachine::read(uint8_t addr, uint8_t reg, void (*callback)(uint8_t))
 	worker();
 }
 
-void TWIStateMachine::read(uint8_t addr, uint8_t reg, void (*callback)(uint8_t *, uint8_t), uint8_t lenght) {
+void TWIStateMachine::read(const uint8_t addr, const uint8_t reg, void (*callback)(uint8_t *, uint8_t), uint8_t lenght) {
 	if(state != NONE) return;
 	address = addr;
 	regAddress = reg;
@@ -51,30 +57,33 @@ void TWIStateMachine::read(uint8_t addr, uint8_t reg, void (*callback)(uint8_t *
 	worker();
 }
 
-void TWIStateMachine::write(uint8_t addr, uint8_t reg, uint8_t dataToWrite) {
+void TWIStateMachine::write(const uint8_t addr, const uint8_t reg, const uint8_t dataToWrite) {
 	if(state != NONE) return;
 	address = addr;
 	regAddress = reg;
 	arrayLenght = 1;
 	counter = 0;
-	dataArray = &dataToWrite;
+	dataArray = (volatile uint8_t*)malloc(1);
+	*dataArray = dataToWrite;
 	mode = WRITE_REG;
 	state = START;
 	worker();
 }
 
-void TWIStateMachine::write(uint8_t addr, uint8_t reg, uint8_t * dataArrayToWrite, uint8_t lenght) {
+void TWIStateMachine::write(const uint8_t addr, const uint8_t reg, const uint8_t * dataArrayToWrite, const uint8_t lenght) {
 	if(state != NONE) return;
 	address = addr;
 	regAddress = reg;
 	arrayLenght = lenght;
-	dataArray = dataArrayToWrite;
+	dataArray = (volatile uint8_t *)malloc(lenght);
+	for(int i = 0; i<lenght; i++) dataArray[i] = dataArrayToWrite[i];
 	counter = 0;
 	mode = WRITE_REG;
 	state = START;
 	worker();
 }
 
+#include "leds.h"
 
 void TWIStateMachine::worker() {
 	switch (state) {
@@ -138,6 +147,7 @@ void TWIStateMachine::worker() {
 			state = NONE;
 			if(arrayLenght == 1) readCallback(*dataArray);
 			else readCallbackArray((uint8_t*)dataArray, arrayLenght);
+			free((void*)dataArray);
 			break;
 	}
 }

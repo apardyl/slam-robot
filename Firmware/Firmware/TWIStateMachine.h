@@ -18,11 +18,11 @@ public:
 	void init();
 	void worker();
 	void reset();
-	void write(uint8_t addr, uint8_t reg, uint8_t dataToWrite);
-	void write(uint8_t addr, uint8_t reg, uint8_t * dataArrayToWrite, uint8_t lenght);
-	void read(uint8_t addr, uint8_t reg, void (*callback)(uint8_t));
-	void read(uint8_t addr, uint8_t reg, void (*callback)(uint8_t *, uint8_t), uint8_t lenght);
-	
+	void write(const uint8_t addr, const uint8_t reg, const uint8_t dataToWrite);
+	void write(const uint8_t addr, const uint8_t reg, const uint8_t * dataArrayToWrite, const uint8_t lenght);
+	void read(const uint8_t addr, const uint8_t reg, void (*callback)(uint8_t));
+	void read(const uint8_t addr, const uint8_t reg, void (*callback)(uint8_t *, uint8_t), uint8_t lenght);
+	bool isBusy();
 private:
 	uint8_t address, regAddress;
 	volatile uint8_t * dataArray;

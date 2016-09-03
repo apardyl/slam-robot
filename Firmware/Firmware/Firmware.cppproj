@@ -183,6 +183,12 @@
     <Compile Include="FIFO.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="IMU.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="IMU.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="leds.cpp">
       <SubType>compile</SubType>
     </Compile>
