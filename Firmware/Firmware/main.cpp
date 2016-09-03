@@ -59,7 +59,7 @@ int main(void) {
 	initServos();
 	initEncoders();
 	i2c.init();
-	imu.start();
+	imuStart();
 
 	beep();
 	
@@ -67,7 +67,7 @@ int main(void) {
 	
 	//_delay_ms(1000);
 	//i2c.write(0x1D,0x24,0xF0);
-	imu.worker();
+	imuWorker();
 	_delay_ms(1000);	
 
 	i2c.read(0x1D,0x20,test);	
@@ -79,7 +79,10 @@ int main(void) {
 	sendDebugUSART();
 	
 	while (1) {
-		if(!FIFORxGPSUsart.isEmpty()) FIFOTxDebugUsart.insert(FIFORxGPSUsart.pop());
-		sendDebugUSART();
+		imuWorker();
+		writeLed(imu.magn.x>>8);
+		//if(!FIFORxGPSUsart.isEmpty()) FIFOTxDebugUsart.insert(FIFORxGPSUsart.pop());
+		//sendDebugUSART();
+		//_delay_ms(1000);
 	}
 }

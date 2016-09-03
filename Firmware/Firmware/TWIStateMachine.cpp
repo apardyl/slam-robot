@@ -110,8 +110,9 @@ void TWIStateMachine::worker() {
 			state = (counter == arrayLenght) ? wSTOP : wSDATA;
 			break;
 		case wSTOP:
-			TWCR = ( 1 << TWEN ) | (1 << TWIE) | (1 << TWINT) | (1 << TWSTO);
+			TWCR = ( 1 << TWEN ) | (1 << TWINT) | (1 << TWSTO);
 			state = NONE;
+			TWCR = 0x00;
 			break;
 		case rRSTART:
 			TWCR = ( 1 << TWEN ) | (1 << TWIE) | (1 << TWSTA) | (1 << TWINT);
@@ -143,11 +144,12 @@ void TWIStateMachine::worker() {
 			state = rSTOP;
 		case rSTOP:
 			*(dataArray + counter) = TWDR;
-			TWCR = ( 1 << TWEN ) | (1 << TWIE) | (1 << TWINT) | (1 << TWSTO);
-			state = NONE;
+			TWCR = ( 1 << TWEN ) | (1 << TWINT) | (1 << TWSTO);
 			if(arrayLenght == 1) readCallback(*dataArray);
 			else readCallbackArray((uint8_t*)dataArray, arrayLenght);
 			free((void*)dataArray);
+			state = NONE;
+			TWCR = 0x00;
 			break;
 	}
 }

@@ -9,21 +9,24 @@
 #ifndef __IMU_H__
 #define __IMU_H__
 
-#define LSM303D 0x1D
+#include <stdint.h>
 
-class IMU
-{
-public:
+struct ThreeAxis {
+	uint16_t x, y, z;	
+};
+
+struct IMU {
 	IMU();
-	void worker();
-	void start();
-	void stop();
-	enum states {NONE, SETUP};
+	enum states {NONE, SETUP, READ_ACCEL, READ_MAGN};
+	volatile ThreeAxis accel, magn;
 	states state;
-private:
-
 }; //IMU
 
 extern IMU imu;
+void imuReceiveAccel(uint8_t * data, uint8_t lenght);
+void imuReceiveMagn(uint8_t * data, uint8_t lenght);
+void imuWorker();
+void imuStart();
+void imuStop();
 
 #endif //__IMU_H__
