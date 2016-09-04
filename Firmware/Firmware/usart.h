@@ -11,12 +11,18 @@
 
 #include "FIFO.h"
 
+struct USART {
+	FIFO rx, tx;
+	bool isBusy;
+	USART(uint8_t RXbuff, uint8_t TXbuff) : isBusy(true), rx(RXbuff), tx(TXbuff) {}
+};
+
 void initDebugUSART();
-extern FIFO FIFOTxDebugUsart;
-extern FIFO FIFORxDebugUsart;
+extern USART DebugUsart;
 void sendDebugUSART();
 
 void initGPSUSART();
-extern FIFO FIFORxGPSUsart;
+extern USART GPSUsart;
+void sendGPSUSART();
 
 #endif /* USART_H_ */

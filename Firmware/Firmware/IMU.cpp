@@ -8,6 +8,7 @@
 
 #include "IMU.h"
 #include "TWIStateMachine.h"
+#include "time.h"
 
 #define LSM303D 0x1D
 #define L3GD20H 0x6B
@@ -67,8 +68,13 @@ void imuWorker() {
 			break;
 		case  imu.READ_GYRO:
 			i2c.read(L3GD20H, 0x28 | (1<<MULTIBYTE), imuReceiveGyro, 6);
-			imu.state = imu.READ_ACCEL;
+			imu.state = imu.WAIT;
 			break; 
+		case imu.WAIT:
+			if(milis - imu.last < 20) return;
+			imu.last = milis;
+			imu.state = imu.READ_ACCEL;
+			break;
 	}
 }
 

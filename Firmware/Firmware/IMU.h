@@ -17,8 +17,9 @@ struct ThreeAxis {
 
 struct IMU {
 	IMU();
-	enum states {NONE, SETUP_LSM303D, SETUP_L3GD20H, READ_ACCEL, READ_MAGN, READ_GYRO};
+	enum states {NONE, SETUP_LSM303D, SETUP_L3GD20H, READ_ACCEL, READ_MAGN, READ_GYRO, WAIT};
 	volatile ThreeAxis accel, magn, gyro;
+	uint32_t last;
 	states state;
 }; //IMU
 

@@ -216,6 +216,12 @@
     <Compile Include="servo.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="time.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="time.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="TWIStateMachine.cpp">
       <SubType>compile</SubType>
     </Compile>
