@@ -65,13 +65,6 @@ int main(void) {
 	
 	sei();
 	
-	//_delay_ms(1000);
-	//i2c.write(0x1D,0x24,0xF0);
-	imuWorker();
-	_delay_ms(1000);	
-
-	i2c.read(0x1D,0x20,test);	
-	
 	for(int i = 0; i<25; i++) {
 		FIFOTxDebugUsart.insert('#');
 	}
@@ -80,9 +73,7 @@ int main(void) {
 	
 	while (1) {
 		imuWorker();
-		writeLed(imu.magn.x>>8);
-		//if(!FIFORxGPSUsart.isEmpty()) FIFOTxDebugUsart.insert(FIFORxGPSUsart.pop());
-		//sendDebugUSART();
-		//_delay_ms(1000);
+		if(!FIFORxGPSUsart.isEmpty()) FIFOTxDebugUsart.insert(FIFORxGPSUsart.pop());
+		sendDebugUSART();
 	}
 }

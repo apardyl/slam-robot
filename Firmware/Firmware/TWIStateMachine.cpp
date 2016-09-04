@@ -143,6 +143,7 @@ void TWIStateMachine::worker() {
 			counter++;
 			state = rSTOP;
 		case rSTOP:
+			for(int i = 1000; i>0; i--) {}
 			*(dataArray + counter) = TWDR;
 			TWCR = ( 1 << TWEN ) | (1 << TWINT) | (1 << TWSTO);
 			if(arrayLenght == 1) readCallback(*dataArray);
