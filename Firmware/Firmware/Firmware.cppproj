@@ -54,6 +54,19 @@
     </com_atmel_avrdbg_tool_atmelice>
     <avrtoolinterface>JTAG</avrtoolinterface>
     <avrtoolinterfaceclock>4000000</avrtoolinterfaceclock>
+    <com_atmel_avrdbg_tool_simulator>
+      <ToolOptions xmlns="">
+        <InterfaceProperties>
+        </InterfaceProperties>
+        <InterfaceName>
+        </InterfaceName>
+      </ToolOptions>
+      <ToolType xmlns="">com.atmel.avrdbg.tool.simulator</ToolType>
+      <ToolNumber xmlns="">
+      </ToolNumber>
+      <ToolName xmlns="">Simulator</ToolName>
+    </com_atmel_avrdbg_tool_simulator>
+    <UseGdb>False</UseGdb>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
@@ -171,6 +184,12 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ADC.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ADC.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="encoder.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -222,10 +241,10 @@
     <Compile Include="time.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="TWIStateMachine.cpp">
+    <Compile Include="i2c.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="TWIStateMachine.h">
+    <Compile Include="i2c.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="usart.cpp">

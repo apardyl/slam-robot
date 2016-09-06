@@ -6,32 +6,29 @@
 */
 
 
-#include "TWIStateMachine.h"
+#include "i2c.h"
 #include <avr/interrupt.h>
 #include <avr/io.h>
 #include <stdlib.h>
 
-TWIStateMachine::TWIStateMachine() : state(NONE) {
-}
-
-void TWIStateMachine::init() {
+void I2C::init() {
 	TWBR = 0x48; //100kHz
 	TWSR &= ~((1<<TWPS0) | (1<<TWPS1));
 	TWCR = (1<<TWEN);
 }
 
-void TWIStateMachine::reset() {
+void I2C::reset() {
 	state = NONE;
 	TWCR = 0x00;
 	TWDR = 0x00;
 	init();
 }
 
-bool TWIStateMachine::isBusy() {
+bool I2C::isBusy() {
 	return state != NONE;
 }
 
-void TWIStateMachine::read(const uint8_t addr, const uint8_t reg, void (*callback)(uint8_t)) {
+void I2C::read(const uint8_t addr, const uint8_t reg, void (*callback)(uint8_t)) {
 	if(state != NONE) return;
 	address = addr;
 	regAddress = reg;
@@ -44,7 +41,7 @@ void TWIStateMachine::read(const uint8_t addr, const uint8_t reg, void (*callbac
 	worker();
 }
 
-void TWIStateMachine::read(const uint8_t addr, const uint8_t reg, void (*callback)(uint8_t *, uint8_t), uint8_t lenght) {
+void I2C::read(const uint8_t addr, const uint8_t reg, void (*callback)(uint8_t *, uint8_t), uint8_t lenght) {
 	if(state != NONE) return;
 	address = addr;
 	regAddress = reg;
@@ -57,7 +54,7 @@ void TWIStateMachine::read(const uint8_t addr, const uint8_t reg, void (*callbac
 	worker();
 }
 
-void TWIStateMachine::write(const uint8_t addr, const uint8_t reg, const uint8_t dataToWrite) {
+void I2C::write(const uint8_t addr, const uint8_t reg, const uint8_t dataToWrite) {
 	if(state != NONE) return;
 	address = addr;
 	regAddress = reg;
@@ -70,7 +67,7 @@ void TWIStateMachine::write(const uint8_t addr, const uint8_t reg, const uint8_t
 	worker();
 }
 
-void TWIStateMachine::write(const uint8_t addr, const uint8_t reg, const uint8_t * dataArrayToWrite, const uint8_t lenght) {
+void I2C::write(const uint8_t addr, const uint8_t reg, const uint8_t * dataArrayToWrite, const uint8_t lenght) {
 	if(state != NONE) return;
 	address = addr;
 	regAddress = reg;
@@ -85,7 +82,7 @@ void TWIStateMachine::write(const uint8_t addr, const uint8_t reg, const uint8_t
 
 #include "leds.h"
 
-void TWIStateMachine::worker() {
+void I2C::worker() {
 	switch (state) {
 		case NONE:
 			break;
@@ -155,7 +152,7 @@ void TWIStateMachine::worker() {
 	}
 }
 
-TWIStateMachine i2c;
+I2C i2c;
 
 ISR(TWI_vect) {
 	i2c.worker();

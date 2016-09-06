@@ -6,15 +6,13 @@
 */
 
 
-#ifndef __TWISTATEMACHINE_H__
-#define __TWISTATEMACHINE_H__
+#ifndef __I2C_H__
+#define __I2C_H__
 
 #include <stdint.h>
 
-class TWIStateMachine
-{
+class I2C {
 public:
-	TWIStateMachine();
 	void init();
 	void worker();
 	void reset();
@@ -23,6 +21,7 @@ public:
 	void read(const uint8_t addr, const uint8_t reg, void (*callback)(uint8_t));
 	void read(const uint8_t addr, const uint8_t reg, void (*callback)(uint8_t *, uint8_t), uint8_t lenght);
 	bool isBusy();
+	I2C() : state(NONE) {}
 private:
 	uint8_t address, regAddress;
 	volatile uint8_t * dataArray;
@@ -35,9 +34,8 @@ private:
 	
 	enum states {NONE, START, SADDR, SREGADR, wSDATA, wSTOP, rRSTART, rRADDR, rRDATA, rRDATAFIRST, rRDATAMIDDLE, rRDATALAST, rSTOP};
 	volatile states state;
-	
-}; //TWIStateMachine
+};
 
-extern TWIStateMachine i2c;
+extern I2C i2c;
 
-#endif //__TWISTATEMACHINE_H__
+#endif //__I2C_H__

@@ -14,7 +14,7 @@
 struct USART {
 	FIFO rx, tx;
 	bool isBusy;
-	USART(uint8_t RXbuff, uint8_t TXbuff) : isBusy(true), rx(RXbuff), tx(TXbuff) {}
+	USART(uint8_t RXbuff, uint8_t TXbuff) : rx(RXbuff), tx(TXbuff), isBusy(true) {}
 };
 
 void initDebugUSART();

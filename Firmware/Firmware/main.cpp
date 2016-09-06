@@ -12,9 +12,10 @@
 #include "servo.h"
 #include "encoder.h"
 #include "usart.h"
-#include "TWIStateMachine.h"
+#include "i2c.h"
 #include "IMU.h"
 #include "time.h"
+#include "ADC.h"
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
@@ -45,11 +46,6 @@ void initPorts() {
 	DDRL = 0xFF;
 }
 
-void test(uint8_t data) {
-	uint8_t lol = data;
-	writeLed(lol);
-}
-
 int main(void) {
 	initTime();
 	initPorts();
@@ -61,31 +57,27 @@ int main(void) {
 	initServos();
 	initEncoders();
 	i2c.init();
-	imuStart();
-
+	imu.start();
+	adc.start();
+	
+	
 	beep();
+	_delay_ms(100);
 	
 	sei();
-	
-	_delay_ms(1000);
-	
+		
 	DebugUsart.tx.insertString("\r\n#### START ####\r\n");
 	sendDebugUSART();
 	
-	//_delay_ms(1000);
-	
-	//volatile bool lol = true;
-	
 	while (1) {
-		imuWorker();
+		imu.worker();
 		
 		moveLine(GPSUsart.rx, DebugUsart.tx);
-//		if(!GPSUsart.rx.isEmpty()) DebugUsart.tx.insert(GPSUsart.rx.pop());
 		
 		static uint32_t last;
 		if(milis - last > 200) {
 			last = milis;
-			static char data[25];		
+			static char data[30];		
 			sprintf(data, "$ACCE,%04X,%04X,%04X\r\n", imu.accel.x, imu.accel.y, imu.accel.z);
 			DebugUsart.tx.insertString(data);
 			sprintf(data, "$MAGN,%04X,%04X,%04X\r\n", imu.magn.x, imu.magn.y, imu.magn.z);
@@ -94,8 +86,9 @@ int main(void) {
 			DebugUsart.tx.insertString(data);
 			sprintf(data, "$ENCO,%04X,%04X\r\n", leftEncoder, rightEncoder);
 			DebugUsart.tx.insertString(data);
+			sprintf(data, "$BATT,%04X,%04X,%04X,%04X\r\n", adc.read(adc.ADC11), adc.read(adc.ADC10), adc.read(adc.ADC9), adc.read(adc.ADC8));
+			DebugUsart.tx.insertString(data);
 		}
-		//if(lol) DebugUsart.tx.insertString("\r\n1234567890 START 1234567890\r\n");
 		sendDebugUSART();
 	}
 }
