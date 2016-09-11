@@ -13,12 +13,12 @@
 
 class Adc {
 public:
-	void start();
-	void stop();
+	void worker();
 	enum ports : uint8_t {ADC0 = 0, ADC1, ADC2, ADC3, ADC8 = 8, ADC9, ADC10, ADC11, ADC12, ADC13, ADC14, ADC15};
 	uint16_t read(ports port);
-	void worker();
-	Adc() : current(ADC0) {}
+	void isr();
+	Adc() : isBusy(false), current(ADC0) {}
+	bool isBusy;
 private:
 	volatile ports current;
 	volatile uint16_t reading[16];

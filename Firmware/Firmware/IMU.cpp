@@ -66,7 +66,7 @@ void IMU::worker() {
 		case SETUP_L3GD20H: {
 			const uint8_t config[5] = {
 				0x6F, //200 Hz ODR, 50 Hz bandwidth, enable all
-				0x00, //no triger, no high-pass
+				0x00, //no trigger, no high-pass
 				0x00, //no int
 				0x00, //no block, lsp first, 245dps, no level sensitive latched, no self-test
 				0x00, //no reboot, no fifo, no high-pass, no int
@@ -88,7 +88,7 @@ void IMU::worker() {
 			state = WAIT;
 			break; 
 		case WAIT:
-			if(milis - last < 20) return;
+			if(milis - last < 25) return;
 			last = milis;
 			state = READ_ACCEL;
 			break;

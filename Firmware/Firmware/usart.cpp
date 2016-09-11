@@ -13,7 +13,7 @@
 USART DebugUsart(250, 250);
 
 void initDebugUSART() {
-	UBRR3 = 0x0000;
+	UBRR3 = /*0x067;*/ 0x0000;
 	UCSR3B = (1<<RXEN3) | (1<<TXEN3) | (1<<TXCIE3) | (1<<RXCIE3);
 	UCSR3C = (1<<UCSZ30) | (1<<UCSZ31);
 	DebugUsart.isBusy = false;
@@ -36,7 +36,7 @@ ISR(USART3_RX_vect) {
 	DebugUsart.rx.insert(UDR3);
 }
 
-USART GPSUsart(250, 8);
+USART GPSUsart(250, 64);
 
 void initGPSUSART() {
 	UBRR0 = 0x0067;

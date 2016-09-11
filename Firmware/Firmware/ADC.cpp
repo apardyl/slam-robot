@@ -11,23 +11,26 @@
 	
 Adc adc;
 	
-void Adc::start() {
+void Adc::worker() {
+	if(isBusy) return;
 	ADMUX = (1<<REFS0);
 	ADCSRA = (1<<ADEN) | (1<<ADSC) | (1<<ADIE) | (1<<ADPS2) | (1<<ADPS1);
-}
-
-void Adc::stop() {
-	ADCSRA = 0x00;
+	isBusy = true;
+	current = ADC0;
 }
 
 uint16_t Adc::read(ports port) {
 	return reading[port];
 }
 
-void Adc::worker() {
+void Adc::isr() {
 	reading[current] = ADC;
+	if(current == ADC15) {
+		ADCSRA = 0x00;
+		isBusy = false;
+		return;
+	}
 	if(current == ADC3) current = ADC8;
-	else if(current == ADC15) current = ADC0;
 	else current = (ports)(((uint8_t)current) + 1);
 	
 	ADMUX = (1<<REFS0) | (current & 0b111);
@@ -37,5 +40,5 @@ void Adc::worker() {
 	
 
 ISR(ADC_vect) {
-	adc.worker();
+	adc.isr();
 }

@@ -56,18 +56,23 @@ int main(void) {
 	initMotors();
 	initServos();
 	initEncoders();
-	i2c.init();
-	imu.start();
-	adc.start();
-	
+ 	i2c.init();
+ 	imu.start();
+ 	
 	
 	beep();
 	_delay_ms(100);
 	
+	//enableAudio(true);
+	
 	sei();
+	
+	//GPSUsart.tx.insertString("$PMTK300,200,0,0,0,0*2F\r\n");
+	//GPSUsart.tx.insertString("$PMTK220,200*2C\r\n");
+	//sendGPSUSART();
 		
-	DebugUsart.tx.insertString("\r\n#### START ####\r\n");
-	sendDebugUSART();
+// 	DebugUsart.tx.insertString("\r\n#### START ####\r\n");
+// 	sendDebugUSART();
 	
 	while (1) {
 		imu.worker();
@@ -75,9 +80,9 @@ int main(void) {
 		moveLine(GPSUsart.rx, DebugUsart.tx);
 		
 		static uint32_t last;
-		if(milis - last > 200) {
+		if(milis - last > 50) {
 			last = milis;
-			static char data[30];		
+			static char data[30];
 			sprintf(data, "$ACCE,%04X,%04X,%04X\r\n", imu.accel.x, imu.accel.y, imu.accel.z);
 			DebugUsart.tx.insertString(data);
 			sprintf(data, "$MAGN,%04X,%04X,%04X\r\n", imu.magn.x, imu.magn.y, imu.magn.z);
@@ -88,7 +93,13 @@ int main(void) {
 			DebugUsart.tx.insertString(data);
 			sprintf(data, "$BATT,%04X,%04X,%04X,%04X\r\n", adc.read(adc.ADC11), adc.read(adc.ADC10), adc.read(adc.ADC9), adc.read(adc.ADC8));
 			DebugUsart.tx.insertString(data);
+			
+			adc.worker();
 		}
+		
+		//if(!GPSUsart.rx.isEmpty()) DebugUsart.tx.insert(GPSUsart.rx.pop());
+		//if(!DebugUsart.rx.isEmpty()) GPSUsart.tx.insert(DebugUsart.rx.pop());
 		sendDebugUSART();
+		//sendGPSUSART();
 	}
 }
