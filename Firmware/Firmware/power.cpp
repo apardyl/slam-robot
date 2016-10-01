@@ -34,5 +34,5 @@ void enableMotors(bool enable) {
 }
 
 void enableAudio(bool enable) {
-	PORTH = (PORTH & ~(1<<PH2)) | (enable<<PH2);
+	PORTH = (PORTH & ~(1<<PH2)) | ((enable)<<PH2);
 }

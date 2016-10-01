@@ -16,6 +16,7 @@
 #include "IMU.h"
 #include "time.h"
 #include "ADC.h"
+#include "interpreter.h"
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
@@ -63,9 +64,14 @@ int main(void) {
 	beep();
 	_delay_ms(100);
 	
-	//enableAudio(true);
+	
+	enableMotors(true);
+	//setMotors(0xb2,0xb2);
+	
 	
 	sei();
+	
+	//enableAudio(true);
 	
 	//GPSUsart.tx.insertString("$PMTK300,200,0,0,0,0*2F\r\n");
 	//GPSUsart.tx.insertString("$PMTK220,200*2C\r\n");
@@ -95,11 +101,13 @@ int main(void) {
 			DebugUsart.tx.insertString(data);
 			
 			adc.worker();
+			//writeLed(milis>>4);
 		}
 		
 		//if(!GPSUsart.rx.isEmpty()) DebugUsart.tx.insert(GPSUsart.rx.pop());
 		//if(!DebugUsart.rx.isEmpty()) GPSUsart.tx.insert(DebugUsart.rx.pop());
 		sendDebugUSART();
+		interpreter(DebugUsart.rx);
 		//sendGPSUSART();
 	}
 }

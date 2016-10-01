@@ -57,6 +57,10 @@ uint8_t FIFO::pop() {
 	return x;
 }
 
+uint8_t FIFO::front() {
+	return *(buffer + tail);
+}
+
 void FIFO::insertString(const char * string) {
 	for(int i = 0;; i++) {
 		if(string[i] == '\0') break;

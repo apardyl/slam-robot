@@ -55,16 +55,15 @@
     <avrtoolinterface>JTAG</avrtoolinterface>
     <avrtoolinterfaceclock>4000000</avrtoolinterfaceclock>
     <com_atmel_avrdbg_tool_simulator>
-      <ToolOptions xmlns="">
+      <ToolOptions>
         <InterfaceProperties>
         </InterfaceProperties>
-        <InterfaceName>
-        </InterfaceName>
+        <InterfaceName>JTAG</InterfaceName>
       </ToolOptions>
-      <ToolType xmlns="">com.atmel.avrdbg.tool.simulator</ToolType>
-      <ToolNumber xmlns="">
+      <ToolType>com.atmel.avrdbg.tool.simulator</ToolType>
+      <ToolNumber>
       </ToolNumber>
-      <ToolName xmlns="">Simulator</ToolName>
+      <ToolName>Simulator</ToolName>
     </com_atmel_avrdbg_tool_simulator>
     <UseGdb>False</UseGdb>
   </PropertyGroup>
@@ -206,6 +205,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="IMU.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="interpreter.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="interpreter.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="leds.cpp">

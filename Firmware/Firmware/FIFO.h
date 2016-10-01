@@ -18,6 +18,7 @@ public:
 	void insert(uint8_t data);
 	void insertString(const char * string);
 	uint8_t pop();
+	uint8_t front();
 	uint8_t linesInBufffer();
 	bool isFULL();
 	bool isEmpty();
