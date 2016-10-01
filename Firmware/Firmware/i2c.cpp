@@ -10,11 +10,18 @@
 #include <avr/interrupt.h>
 #include <avr/io.h>
 #include <stdlib.h>
+#include "time.h"
 
 void I2C::init() {
 	TWBR = 0x48; //100kHz
 	TWSR &= ~((1<<TWPS0) | (1<<TWPS1));
 	TWCR = (1<<TWEN);
+}
+
+void I2C::worker() {
+	if(milis - last > 100) {
+		reset();
+	}
 }
 
 void I2C::reset() {
@@ -38,7 +45,7 @@ void I2C::read(const uint8_t addr, const uint8_t reg, void (*callback)(uint8_t))
 	dataArray = (volatile uint8_t*)malloc(1);
 	mode = READ_REG;
 	state = START;
-	worker();
+	isr();
 }
 
 void I2C::read(const uint8_t addr, const uint8_t reg, void (*callback)(uint8_t *, uint8_t), uint8_t lenght) {
@@ -51,7 +58,7 @@ void I2C::read(const uint8_t addr, const uint8_t reg, void (*callback)(uint8_t *
 	dataArray = (volatile uint8_t*)malloc(lenght);
 	mode = READ_REG;
 	state = START;
-	worker();
+	isr();
 }
 
 void I2C::write(const uint8_t addr, const uint8_t reg, const uint8_t dataToWrite) {
@@ -64,7 +71,7 @@ void I2C::write(const uint8_t addr, const uint8_t reg, const uint8_t dataToWrite
 	*dataArray = dataToWrite;
 	mode = WRITE_REG;
 	state = START;
-	worker();
+	isr();
 }
 
 void I2C::write(const uint8_t addr, const uint8_t reg, const uint8_t * dataArrayToWrite, const uint8_t lenght) {
@@ -77,12 +84,12 @@ void I2C::write(const uint8_t addr, const uint8_t reg, const uint8_t * dataArray
 	counter = 0;
 	mode = WRITE_REG;
 	state = START;
-	worker();
+	isr();
 }
 
 #include "leds.h"
 
-void I2C::worker() {
+void I2C::isr() {
 	switch (state) {
 		case NONE:
 			break;
@@ -148,6 +155,7 @@ void I2C::worker() {
 			free((void*)dataArray);
 			state = NONE;
 			TWCR = 0x00;
+			last = milis;
 			break;
 	}
 }
@@ -155,5 +163,5 @@ void I2C::worker() {
 I2C i2c;
 
 ISR(TWI_vect) {
-	i2c.worker();
+	i2c.isr();
 }

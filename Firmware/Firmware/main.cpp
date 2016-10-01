@@ -81,6 +81,7 @@ int main(void) {
 // 	sendDebugUSART();
 	
 	while (1) {
+		i2c.worker();
 		imu.worker();
 		
 		moveLine(GPSUsart.rx, DebugUsart.tx);

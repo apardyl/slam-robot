@@ -14,6 +14,7 @@
 class I2C {
 public:
 	void init();
+	void isr();
 	void worker();
 	void reset();
 	void write(const uint8_t addr, const uint8_t reg, const uint8_t dataToWrite);
@@ -21,7 +22,7 @@ public:
 	void read(const uint8_t addr, const uint8_t reg, void (*callback)(uint8_t));
 	void read(const uint8_t addr, const uint8_t reg, void (*callback)(uint8_t *, uint8_t), uint8_t lenght);
 	bool isBusy();
-	I2C() : state(NONE) {}
+	I2C() : state(NONE), last(0) {}
 private:
 	uint8_t address, regAddress;
 	volatile uint8_t * dataArray;
@@ -34,6 +35,7 @@ private:
 	
 	enum states {NONE, START, SADDR, SREGADR, wSDATA, wSTOP, rRSTART, rRADDR, rRDATA, rRDATAFIRST, rRDATAMIDDLE, rRDATALAST, rSTOP};
 	volatile states state;
+	volatile uint32_t last;
 };
 
 extern I2C i2c;
