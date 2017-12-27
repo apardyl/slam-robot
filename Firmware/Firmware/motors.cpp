@@ -1,6 +1,7 @@
 #include "motors.h"
 #include <avr/io.h>
 
+#define MAXSAFESPEED 0xFF
 
 void initMotors() {
 	OCR5B = 0x00;
