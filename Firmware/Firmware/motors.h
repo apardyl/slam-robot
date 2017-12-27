@@ -4,6 +4,6 @@
 #include <stdint.h>
 
 void initMotors();
-void setMotors(uint8_t left, uint8_t right);
+void setMotors(int8_t left, int8_t right);
 
 #endif /* MOTORS_H_ */
