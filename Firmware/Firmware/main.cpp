@@ -10,6 +10,8 @@
 #include "time.h"
 #include "ADC.h"
 #include "interpreter.h"
+#include "sonar.h"
+#include "freeRoam.h"
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
@@ -40,26 +42,32 @@ void initPorts() {
 	DDRL = 0xFF;
 }
 
+
+
 int main(void) {
 	initTime();
 	initPorts();
 	initPower();
 	initLeds();
 	initDebugUSART();
-	initGPSUSART();
+	//initGPSUSART();
+	initAuxUSART();
 	initMotors();
 	initServos();
 	initEncoders();
- 	i2c.init();
- 	imu.start();
+ 	//i2c.init();
+ 	//imu.start();
  	
+	_delay_ms(3000);
 	
 	beep();
 	_delay_ms(100);
 	
 	
 	enableMotors(true);
-	//setMotors(0xb2,0xb2);
+	enableServos(true);
+	//enableCPU(true);
+	//enableKinect(true);
 	
 	
 	sei();
@@ -72,12 +80,22 @@ int main(void) {
 		
 // 	DebugUsart.tx.insertString("\r\n#### START ####\r\n");
 // 	sendDebugUSART();
+
+	setServo(SERVO0, 90);
+	_delay_ms(200);
+	
+	freeRoam();
+	
+	/*
+	
+	sonarRequest();
 	
 	while (1) {
-		i2c.worker();
-		imu.worker();
-		
-		moveLine(GPSUsart.rx, DebugUsart.tx);
+		//i2c.worker();
+		//imu.worker();
+		refreshSonar();
+		writeLed(sonarDist);
+		//moveLine(GPSUsart.rx, DebugUsart.tx);
 		
 		static uint32_t last;
 		if(milis - last > 50) {
@@ -98,10 +116,21 @@ int main(void) {
 			//writeLed(milis>>4);
 		}
 		
+		
 		//if(!GPSUsart.rx.isEmpty()) DebugUsart.tx.insert(GPSUsart.rx.pop());
 		//if(!DebugUsart.rx.isEmpty()) GPSUsart.tx.insert(DebugUsart.rx.pop());
-		sendDebugUSART();
-		interpreter(DebugUsart.rx);
+		//sendDebugUSART();
+		//interpreter(DebugUsart.rx);
 		//sendGPSUSART();
+	}
+	
+	*/
+	
+	// Panic
+	while(1) {
+		writeLed(0xFF);
+		_delay_ms(200);
+		writeLed(0x00);
+		_delay_ms(200);
 	}
 }
