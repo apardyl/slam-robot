@@ -17,4 +17,8 @@ void initGPSUSART();
 extern USART GPSUsart;
 void sendGPSUSART();
 
+void initAuxUSART();
+extern USART AuxUSART;
+void sendAuxUSART();
+
 #endif /* USART_H_ */

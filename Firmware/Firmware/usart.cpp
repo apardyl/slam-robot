@@ -54,3 +54,29 @@ void sendGPSUSART() {
 		UDR0 = GPSUsart.tx.pop();
 	}
 }
+
+USART AuxUSART(250, 32);
+
+void initAuxUSART() {
+	UBRR1 = 0x0067;
+	UCSR1B = (1<<RXEN1) | (1<<RXCIE1) | (1<<TXEN1) | (1<<TXCIE1);
+	UCSR1C = (1<<UCSZ10) | (1<<UCSZ11);
+	AuxUSART.isBusy = false;
+}
+
+ISR(USART1_RX_vect) {
+	AuxUSART.rx.insert(UDR1);
+}
+
+ISR(USART1_TX_vect) {
+	if(!AuxUSART.tx.isEmpty()) UDR1 = AuxUSART.tx.pop();
+	else AuxUSART.isBusy = false;
+}
+
+void sendAuxUSART() {
+	if(AuxUSART.isBusy) return;
+	if(!AuxUSART.tx.isEmpty()) {
+		AuxUSART.isBusy = true;
+		UDR1 = AuxUSART.tx.pop();
+	}
+}
