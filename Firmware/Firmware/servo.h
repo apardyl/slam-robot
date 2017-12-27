@@ -5,9 +5,10 @@
 
 void initServos();
 
-enum servoTypes {SERVO0, SERVO1, SERVO3};
+enum servoTypes {SERVO0, SERVO1, SERVO2};
 
-void setServo(servoTypes servo, uint8_t value);
+void setServo(servoTypes servo, uint16_t value);
+void stopServo(servoTypes servo);
 
 
 #endif /* SERVOS_H_ */
