@@ -1,11 +1,3 @@
-/* 
-* FIFO.cpp
-*
-* Created: 2016-08-21 16:52:36
-* Author: Adam
-*/
-
-
 #include "FIFO.h"
 #include <stdlib.h>
 #include <avr/io.h>

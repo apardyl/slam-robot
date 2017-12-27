@@ -1,10 +1,3 @@
-/*
- * encoder.cpp
- *
- * Created: 2016-08-21 12:28:39
- *  Author: Adam
- */ 
-
 #include "encoder.h"
 #include <avr/interrupt.h>
 #include <avr/io.h>

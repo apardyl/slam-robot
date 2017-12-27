@@ -1,11 +1,3 @@
-/*
- * power.h
- *
- * Created: 2016-08-20 13:09:16
- *  Author: Adam
- */ 
-
-
 #ifndef POWER_H_
 #define POWER_H_
 

@@ -1,10 +1,3 @@
-/*
- * utils.cpp
- *
- * Created: 2016-08-20 13:08:49
- *  Author: Adam
- */ 
-
 #include "utils.h"
 #include <avr/io.h>
 

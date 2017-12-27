@@ -1,10 +1,3 @@
-/*
- * Firmware.cpp
- *
- * Created: 2016-08-20 13:05:51
- * Author : Adam
- */ 
-
 #include "power.h"
 #include "utils.h"
 #include "leds.h"

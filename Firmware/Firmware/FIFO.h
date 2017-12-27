@@ -1,11 +1,3 @@
-/* 
-* FIFO.h
-*
-* Created: 2016-08-21 16:52:36
-* Author: Adam
-*/
-
-
 #ifndef __FIFO_H__
 #define __FIFO_H__
 

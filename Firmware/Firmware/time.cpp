@@ -1,10 +1,3 @@
-/*
- * time.cpp
- *
- * Created: 2016-09-04 15:45:51
- *  Author: Adam
- */ 
-
 #include "time.h"
 #include <avr/io.h>
 #include <avr/interrupt.h>

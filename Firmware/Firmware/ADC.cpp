@@ -1,10 +1,3 @@
-/*
- * ADC.cpp
- *
- * Created: 2016-09-05 13:35:36
- *  Author: Adam
- */ 
-
 #include "ADC.h"
 #include <avr/io.h>
 #include <avr/interrupt.h>

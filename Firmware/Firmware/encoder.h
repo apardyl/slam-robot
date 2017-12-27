@@ -1,11 +1,3 @@
-/*
- * encoder.h
- *
- * Created: 2016-08-21 12:27:31
- *  Author: Adam
- */ 
-
-
 #ifndef ENCODER_H_
 #define ENCODER_H_
 

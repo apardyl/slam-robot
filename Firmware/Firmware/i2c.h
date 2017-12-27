@@ -1,11 +1,3 @@
-/* 
-* TWIStateMachine.h
-*
-* Created: 2016-08-22 15:54:00
-* Author: Adam
-*/
-
-
 #ifndef __I2C_H__
 #define __I2C_H__
 

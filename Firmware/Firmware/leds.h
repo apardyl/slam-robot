@@ -1,11 +1,3 @@
-/*
- * leds.h
- *
- * Created: 2016-08-20 13:14:01
- *  Author: Adam
- */ 
-
-
 #ifndef LEDS_H_
 #define LEDS_H_
 

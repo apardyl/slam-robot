@@ -1,11 +1,3 @@
-/*
- * ADC.h
- *
- * Created: 2016-09-05 13:02:13
- *  Author: Adam
- */ 
-
-
 #ifndef ADC_H_
 #define ADC_H_
 

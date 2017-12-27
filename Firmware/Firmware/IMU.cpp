@@ -1,11 +1,3 @@
-/* 
-* IMU.cpp
-*
-* Created: 2016-08-23 17:03:55
-* Author: Adam
-*/
-
-
 #include "IMU.h"
 #include "i2c.h"
 #include "time.h"

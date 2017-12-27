@@ -1,10 +1,3 @@
-/*
- * usart.cpp
- *
- * Created: 2016-08-21 15:06:01
- *  Author: Adam
- */ 
-
 #include "usart.h"
 #include <avr/io.h>
 

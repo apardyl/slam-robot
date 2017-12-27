@@ -1,11 +1,3 @@
-/*
- * usart.h
- *
- * Created: 2016-08-20 22:12:35
- *  Author: Adam
- */ 
-
-
 #ifndef USART_H_
 #define USART_H_
 

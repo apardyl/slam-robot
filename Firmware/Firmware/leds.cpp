@@ -1,10 +1,3 @@
-/*
- * leds.cpp
- *
- * Created: 2016-08-20 13:25:11
- *  Author: Adam
- */ 
-
 #include "leds.h"
 #include <avr/io.h>
 

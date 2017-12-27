@@ -1,10 +1,3 @@
-/*
- * interpreter.cpp
- *
- * Created: 2016-09-30 23:53:07
- *  Author: Adam
- */ 
-
 #include "interpreter.h"
 #include <stdio.h>
 #include "power.h"

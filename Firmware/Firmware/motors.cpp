@@ -1,14 +1,6 @@
-/*
- * motors.cpp
- *
- * Created: 2016-08-20 16:25:58
- *  Author: Adam
- */ 
-
 #include "motors.h"
 #include <avr/io.h>
 
-#define MAXSAFESPEED 200
 
 void initMotors() {
 	OCR5B = 0x00;

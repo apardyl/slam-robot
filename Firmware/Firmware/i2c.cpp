@@ -1,11 +1,3 @@
-/* 
-* TWIStateMachine.cpp
-*
-* Created: 2016-08-22 15:54:00
-* Author: Adam
-*/
-
-
 #include "i2c.h"
 #include <avr/interrupt.h>
 #include <avr/io.h>

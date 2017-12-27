@@ -1,10 +1,3 @@
-/*
- * servo.cpp
- *
- * Created: 2016-08-20 18:03:00
- *  Author: Adam
- */ 
-
 #include "servo.h"
 #include <avr/io.h>
 

@@ -1,10 +1,3 @@
-/*
- * power.cpp
- *
- * Created: 2016-08-20 13:09:53
- *  Author: Adam
- */ 
-
 #include "power.h"
 #include <avr/io.h>
 

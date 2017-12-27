@@ -1,11 +1,3 @@
-/*
- * servos.h
- *
- * Created: 2016-08-20 17:51:24
- *  Author: Adam
- */ 
-
-
 #ifndef SERVOS_H_
 #define SERVOS_H_
 

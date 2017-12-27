@@ -1,10 +1,8 @@
-/*
- * interpreter.c
- *
- * Created: 2016-09-30 23:42:42
- *  Author: Adam
- */ 
+#ifndef INTERPRETER_H_
+#define INTERPRETER_H_
 
 #include "FIFO.h"
 
 void interpreter(FIFO& fifo);
+
+#endif /* INTERPRETER_H_ */
